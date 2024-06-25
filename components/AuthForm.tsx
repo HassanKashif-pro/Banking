@@ -17,11 +17,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import CustomInput from "./CustomeInput";
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+  email: z.string().email(),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
 });
 
 const AuthForm = ({ type }: { type: string }) => {
@@ -30,7 +30,8 @@ const AuthForm = ({ type }: { type: string }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
+      password: "",
     },
   });
 
@@ -69,23 +70,21 @@ const AuthForm = ({ type }: { type: string }) => {
         <div className="flex flex-col gap-4">{/* PLAID */}</div>
       ) : (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <CustomInput
               control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="shadcn" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
+              name="email"
+              label="Email"
+              placeholder="Enter your email"
             />
+
+            <CustomInput
+              control={form.control}
+              name="password"
+              label="Password"
+              placeholder="Enter your password"
+            />
+
             <Button type="submit">Submit</Button>
           </form>
         </Form>
