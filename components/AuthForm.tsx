@@ -20,6 +20,8 @@ import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { signIn, signUp } from "@/lib/actions/user.actions";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -27,6 +29,7 @@ const formSchema = z.object({
 });
 
 const AuthForm = ({ type }: { type: string }) => {
+  const router = useRouter;
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,16 +43,29 @@ const AuthForm = ({ type }: { type: string }) => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  // 2. Define a submit handler.
+  const onSubmit = async (value: z.infer<typeof formSchema>) => {
     setIsLoading(true);
+
     try {
-      // Simulate form submission
-      console.log(values);
-      // You can add actual form submission logic here
+      // SIign uo with app writ eand conent PLAID toke n
+      // if (type === "sign-up") {
+      //   const newUser = await signUp(data);
+      //   setUser(newUser);
+      // }
+      // if (type === "sign-in") {
+      //   const response = await signIn({
+      //     email: data.email,
+      //     password: data.password,
+      //   });
+      //   if (response) router.push("/");
+      // }
+    } catch (error) {
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <section className="auth-form">
@@ -100,6 +116,12 @@ const AuthForm = ({ type }: { type: string }) => {
                   name="address1"
                   label="Address"
                   placeholder="Enter your specific Address"
+                />
+                <CustomInput
+                  control={form.control}
+                  name="city"
+                  label="City"
+                  placeholder="Enter your City"
                 />
                 <div className="flex gap-4">
                   <CustomInput
