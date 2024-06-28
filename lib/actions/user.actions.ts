@@ -2,12 +2,16 @@
 
 import { cookies } from "next/headers";
 import { createAdminClient, createSessionClient } from "../appwrite";
-import { parse } from "path";
 import { parseStringify } from "../utils";
 import { ID } from "node-appwrite";
 
-export const signIn = async () => {
+export const signIn = async ({ email, password }: signInProps) => {
   try {
+    const { account } = await createSessionClient();
+
+    const response = await account.createEmailPasswordSession(email, password);
+
+    return parseStringify(response);
   } catch (error) {
     console.error("Error", error);
   }
