@@ -5,6 +5,7 @@ import {
   PlaidLinkOptions,
   usePlaidLink,
 } from "react-plaid-link";
+import { StyledString } from "next/dist/build/swc";
 import { useRouter } from "next/navigation";
 import {
   createLinkToken,
@@ -19,6 +20,7 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
   useEffect(() => {
     const getLinkToken = async () => {
       const data = await createLinkToken(user);
+
       setToken(data?.linkToken);
     };
 
@@ -48,16 +50,16 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
     <>
       {variant === "primary" ? (
         <Button
-          onClick={() => open}
+          onClick={() => open()}
           disabled={!ready}
           className="plaidlink-primary"
         >
-          Connect Bank
+          Connect bank
         </Button>
       ) : variant === "ghost" ? (
-        <Button>Connect Bank</Button>
+        <Button>Connect bank</Button>
       ) : (
-        <Button>Connect Bank</Button>
+        <Button>Connect bank</Button>
       )}
     </>
   );
