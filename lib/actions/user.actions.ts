@@ -13,6 +13,7 @@ import {
 import { plaidClient } from "../plaid";
 import { revalidatePath } from "next/cache";
 import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
+import { error } from "console";
 
 const {
   APPWRITE_DATABASE_ID: DATABASE_ID,
@@ -32,8 +33,9 @@ export const signIn = async ({ email, password }: signInProps) => {
   }
 };
 
-export const signUp = async (userData: SignUpParams) => {
-  const { email, password, firstName, lastName } = userData;
+export const signUp = async ({ password, ...userData }: SignUpParams) => {
+  const { email, firstName, lastName } = userData;
+
   let newUserAccount;
 
   try {
@@ -53,7 +55,7 @@ export const signUp = async (userData: SignUpParams) => {
       type: "personal",
     });
 
-    if (!dwollaCustomerUrl) throw new Error("Error creating Dwolla customer");
+    if (!dwollaCustomerUrl) throw console.log("This Is The Error: ", error);
 
     const dwollaCustomerId = extractCustomerIdFromUrl(dwollaCustomerUrl);
 
@@ -78,7 +80,7 @@ export const signUp = async (userData: SignUpParams) => {
       secure: true,
     });
 
-    return parseStringify(newUserAccount);
+    return parseStringify(newUser);
   } catch (error) {
     console.error("Error", error);
   }
