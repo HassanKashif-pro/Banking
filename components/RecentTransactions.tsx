@@ -42,6 +42,7 @@ const RecentTransactions = ({
                 account={account}
                 appwriteItemId={appwriteItemId}
               />
+              Hellow
             </TabsTrigger>
           ))}
         </TabsList>
@@ -57,7 +58,7 @@ const RecentTransactions = ({
               appwriteItemId={appwriteItemId}
               type="full"
             />
-            <TransactionsTable />
+            <TransactionsTable transactions={currentTransactions} />
           </TabsContent>
         ))}
       </Tabs>
