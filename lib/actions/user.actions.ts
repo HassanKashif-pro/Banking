@@ -271,12 +271,10 @@ export const getBank = async ({ documentId }: getBankProps) => {
   try {
     const { database } = await createAdminClient();
 
-    console.log({ documentId });
-
     const bank = await database.listDocuments(
       DATABASE_ID!,
       BANK_COLLECTION_ID!,
-      [Query.equal("$id", ["668c0a50003707fe4b69"])]
+      [Query.equal("$id", [documentId])]
     );
 
     return parseStringify(bank.documents[0]);

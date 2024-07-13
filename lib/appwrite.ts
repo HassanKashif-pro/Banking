@@ -21,7 +21,6 @@ export async function createSessionClient() {
       return new Account(client);
     },
   };
-  FileReader;
 }
 
 export async function createAdminClient() {
@@ -39,6 +38,7 @@ export async function createAdminClient() {
     },
     get user() {
       return new Users(client);
-    },
+    }
   };
 }
+
