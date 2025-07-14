@@ -197,15 +197,15 @@ export const getTransactionStatus = (date: Date) => {
 
 export const authFormSchema = (type: string) => z.object({
   // sign up
-  firstName: type === 'sign-in' ? z.string().optional() : z.string().min(3),
-  lastName: type === 'sign-in' ? z.string().optional() : z.string().min(3),
-  address1: type === 'sign-in' ? z.string().optional() : z.string().max(50),
-  city: type === 'sign-in' ? z.string().optional() : z.string().max(50),
-  state: type === 'sign-in' ? z.string().optional() : z.string().min(2).max(2),
-  postalCode: type === 'sign-in' ? z.string().optional() : z.string().min(3).max(6),
-  dateOfBirth: type === 'sign-in' ? z.string().optional() : z.string().min(3),
-  ssn: type === 'sign-in' ? z.string().optional() : z.string().min(3),
+  firstName: type === 'sign-in' ? z.string().optional() : z.string().min(3, 'First name must be at least 3 characters'),
+  lastName: type === 'sign-in' ? z.string().optional() : z.string().min(3, 'Last name must be at least 3 characters'),
+  address1: type === 'sign-in' ? z.string().optional() : z.string().max(50, 'Address must be at most 50 characters'),
+  city: type === 'sign-in' ? z.string().optional() : z.string().regex(/^[A-Za-z\s]+$/, 'City must contain only letters'),
+  state: type === 'sign-in' ? z.string().optional() : z.string().regex(/^[A-Za-z]{2}$/, 'State must be 2 letters'),
+  postalCode: type === 'sign-in' ? z.string().optional() : z.string().regex(/^\d{5}$/, 'Postal code must be 5 digits'),
+  dateOfBirth: type === 'sign-in' ? z.string().optional() : z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be in YYYY-MM-DD format'),
+  ssn: type === 'sign-in' ? z.string().optional() : z.string().regex(/^\d{4}$/, 'SSN must be last 4 digits'),
   // both
-  email: z.string().email(),
-  password: z.string().min(8),
+  email: z.string().email('Please enter a valid email'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
 })

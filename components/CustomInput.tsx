@@ -20,7 +20,7 @@ const CustomInput = ({ control, name, label, placeholder }: CustomInput) => {
     <FormField
       control={control}
       name={name}
-      render={({ field }) => (
+      render={({ field, fieldState }) => (
         <div className="form-item">
           <FormLabel className="form-label">
             {label}
@@ -29,7 +29,7 @@ const CustomInput = ({ control, name, label, placeholder }: CustomInput) => {
             <FormControl>
               <Input 
                 placeholder={placeholder}
-                className="input-class"
+                className={`input-class ${fieldState.error ? 'ring-1 ring-red-500 focus:ring-red-500' : ''}`}
                 type={name === 'password' ? 'password' : 'text'}
                 {...field}
               />

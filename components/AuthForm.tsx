@@ -35,6 +35,7 @@ const AuthForm = ({ type }: { type: string }) => {
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
       resolver: zodResolver(formSchema),
+      mode: 'onChange',
       defaultValues: {
         email: "",
         password: ''
@@ -113,8 +114,12 @@ const AuthForm = ({ type }: { type: string }) => {
           </div>
       </header>
       {user ? (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 w-full">
           <PlaidLink user={user} variant="primary" />
+          <Button type="button" variant="secondary" onClick={() => router.push('/')}
+            className="w-full border border-gray-300 text-gray-700 hover:bg-gray-100">
+            Continue as guest
+          </Button>
         </div>
       ): (
         <>
